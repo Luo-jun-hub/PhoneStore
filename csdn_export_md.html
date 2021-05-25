@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>《Web应用基础》课程结业报告</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p></p><div class="toc"><h3>《Web应用基础》课程结业报告</h3><ul><li><a href="#_1">目的</a></li><li><a href="#_3">开发过程</a></li><ul><li><a href="#1_5">1、创建所需组件</a></li><li><a href="#2_16">2、添加服务</a></li><li><a href="#3_24">3、添加导航</a></li><li><a href="#4_30">4、模拟服务器数据</a></li></ul><li><a href="#_36">遇到的问题及解决方法</a></li><li><a href="#_52">总结</a></li><ul><li><a href="#_53">知识收获</a></li><li><a href="#_70">心得</a></li></ul></ul></div><p></p>
+<h1><a id="_1"></a>目的</h1>
+<p>通过angular开发一个动态网站，参照angular官网的教程，实现一个简易的手机展示，用户可以增加手机，可以删除手机，也可以修改手机，也可以通过手机的名称查找手机，用户也可以在详情界面选择购买手机。使用 Angular 的内置指令来显示 / 隐藏元素，并显示手机数据的列表；创建Angular 组件以显示手机的详情，并显示一个手机数组；为只读数据使用单向数据绑定；添加可编辑字段，使用双向数据绑定来更新模型；把组件中的方法绑定到用户事件上，比如按键和点击；让用户可以在主列表中选择一款手机，然后在详情视图中编辑他；使用管道来格式化数据；创建共享的服务来管理这些手机。使用路由在不同的视图及其组件之间导航。</p>
+<h1><a id="_3"></a>开发过程</h1>
+<p>参照angular官网的英雄之旅。</p>
+<h2><a id="1_5"></a>1、创建所需组件</h2>
+<pre><code class="prism language-javascript">ng generate component 组件
+</code></pre>
+<p>一共需要创建五个组件分别<br>
+1.dashboard 用于导航<br>
+2.phone-detail 展示手机详情<br>
+3.messages 显示消息<br>
+4.phone-serch 手机查找<br>
+5.phones 手机列表</p>
+<h2><a id="2_16"></a>2、添加服务</h2>
+<pre><code class="prism language-javascript">ng generate service 服务名
+</code></pre>
+<p>1.phone.service<br>
+2.messages.service<br>
+3.in-memory-data.service</p>
+<h2><a id="3_24"></a>3、添加导航</h2>
+<pre><code class="prism language-javascript">ng generate module app<span class="token operator">-</span>routing <span class="token operator">--</span>flat <span class="token operator">--</span>module<span class="token operator">=</span>app
+</code></pre>
+<p>–flat 把这个文件放进了 src/app 中，而不是单独的目录中。<br>
+–module=app 告诉 CLI 把它注册到 AppModule 的 imports 数组中。</p>
+<h2><a id="4_30"></a>4、模拟服务器数据</h2>
+<p>使用内存 Web API（In-memory Web API） 模拟出的远程数据服务器通讯。<br>
+安装完这个模块之后，应用将会通过 HttpClient 来发起请求和接收响应，而不用在乎实际上是这个内存 Web API 在拦截这些请求、操作一个内存数据库，并且给出仿真的响应。<br>
+通过使用内存 Web API，不用架设服务器就可以学习 HttpClient 了。</p>
+<h1><a id="_36"></a>遇到的问题及解决方法</h1>
+<p>1、属性“ selectedPhone”没有初始化程序，并且在构造函数中未明确分配。<br>
+成因：这是因为TypeScript 2.7包含严格的类检查，所有属性都应在构造函数中初始化。<br>
+解决方法一（推荐）：在tsconfig.json中修改strict属性为false，取消严格模式就好了<br>
+解决方法二：“？” 是一种打字稿符号，表示该属性是可选的，并且可能存在或不存在（定义或undefined）</p>
+<p>2、图片无法显示。<br>
+解决办法：图片的存放路径不对，修改路径即可。</p>
+<p>3、expected call-signature: ‘handleError’ to have a typedeftslint(typedef)<br>
+使用tslint 忽略格式检查<br>
+// tslint:disable——忽略该行以下所有代码出现的错误提示，可以在文件首行添加达到忽略整个文件的格式提示<br>
+// tslint:enable——当前ts文件重新启用tslint<br>
+// tslint:disable-line——忽略当前行代码出现的错误提示<br>
+// tslint:disable-next-line——忽略下一行代码出现的错误提示</p>
+<h1><a id="_52"></a>总结</h1>
+<h2><a id="_53"></a>知识收获</h2>
+<p>1、angular模块共有两种类型：功能模块feature module和根模块root module。功能模块用于把相关的应用程序功能归集起来，使应用程序更容易管理<br>
+2、根模块用于向angular描述应用程序，描述内容包括：运营应用程序所需的功能模块，应该加载哪些自定义功能及根组件的名称。根模块文件的惯用名称是app.module，它在src/app文件夹中创建<br>
+3、根模块的唯一作用是通过@NgModule装饰器提供信息，imports属性告诉angular它应该加载BrowserModule功能模块，该模块包含web应用程序需要的所有核心angular功能<br>
+4、declarations属性告诉angular他应该加载根组件，而providers属性告诉angular应用程序使用的共享对象，bootstrap属性告诉angular根组件是AppComponent类<br>
+5、用于启动应用程序的引导文件，这个引导文件使用angular浏览器平台加载根模块并启动应用程序，不需要更改main.ts文件的内容<br>
+6、对于任何新建项目而言，最佳起点就是数据模型<br>
+7、每个数据模型都需要一些类来描述该数据模型中包含的数据类型<br>
+8、参数名称后面的问号字符？表明这些是可选参数，在使用类创建新对象时可以忽略这些参数<br>
+9、为做好从虚拟数据切换到实际数据的准备，这里使用数据源提供应用程序数据，应用程序的其他部分不需要知道数据来自哪里，这样就可以无缝的切换到使用HTTP请求获取数据<br>
+10、Observable类由Reactive Extensions软件包提供，angular使用这个软件包处理应用程序中的状态变化，只需要知道Observable对象代表一个在将来某个时候会产生结果的异步任务。angular的一些功能包括HTTP请求使用了Observable对象<br>
+11、@Injectable装饰器告诉angular，这个类被用作服务，其他类可以通过一项称为依赖注入dependency injection的功能来访问该类的功能<br>
+12、@NgModule装饰器用于创建功能模块，其属性告诉angular如何使用模块，这个模块只有一个providers属性，它告诉angular应该将哪些类做为服务提供给依赖注入功能<br>
+13、@Component装饰器告诉angular这是一个组件，这个装饰器的属性告诉angular如何将组件应用于HTML内容以及如何查找组件的模板，组件提供了支持模板内容的逻辑<br>
+14、angular数据绑定，由{{}}字符表示，这些是字符串插入string interpolation绑定，他们告诉angular对绑定表达式进行求值，并将结果插入元素中<br>
+15、@NgModule装饰器配置模块，使用imports属性告诉angular，该模块依赖模型模块ModelModule和BrowserModule以及FormsModule，后面这两个模块包含用于web应用程序以及HTML表单元素处理的标准angular功能。这个装饰器使用declarations属性告诉angular关于类的信息，exports属性告诉angular哪些类可以用于应用程序的其他部分</p>
+<h2><a id="_70"></a>心得</h2>
+<p>在开发这个PhoneStore之前，我研究了很久的开发文档，并把教程英雄之旅按照教程走了一遍，一遍走下来，发现懂得不是很多，对添加服务，添加导航这些还是很模糊，后面又写这个项目，才稍微有一点点理解，但还是很浅的那种理解，没有琢磨出来点什么东西，就让我有一种很挫败的感觉，不过我听老师说angular开发的特点是起步比较慢，这是因为要为项目打好基础，建立基本的构造块，是一旦完成这些基础工作，就可以相对容易的创建新功能，我在之后还会花时间好好研究angular,相信他会带给我不少的收获。</p>
+</div>
+</body>
+
+</html>
